@@ -11,6 +11,7 @@ import { formatEther } from "ethers/lib/utils";
 import type { NextPage } from "next";
 import Head from "next/head";
 import {
+  Alert,
   Button,
   Layout,
   Input,
@@ -128,29 +129,38 @@ const Home: NextPage = () => {
             </Col>
           </Row>
           <br />
-          <Row gutter={16}>
-            <Form form={form} layout='inline'>
-              <Form.Item>
-                <Input
-                  placeholder='Enter a name to set'
-                  onChange={handleChange}
-                  value={input}
-                  onPressEnter={saveName}
-                  disabled={isDisabled}
-                />
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  type='primary'
-                  onClick={saveName}
-                  loading={isDisabled}
-                  disabled={!input.length}
-                >
-                  {!isDisabled ? "Save" : "Saving"}
-                </Button>
-              </Form.Item>
-            </Form>
-          </Row>
+          {chainId !== ChainId.Ropsten ? (
+            <Alert
+              message='Wrong Network'
+              description='Please switch to Ropsten network.'
+              type='error'
+              showIcon
+            />
+          ) : (
+            <Row gutter={16}>
+              <Form form={form} layout='inline'>
+                <Form.Item>
+                  <Input
+                    placeholder='Enter a name to set'
+                    onChange={handleChange}
+                    value={input}
+                    onPressEnter={saveName}
+                    disabled={isDisabled}
+                  />
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    type='primary'
+                    onClick={saveName}
+                    loading={isDisabled}
+                    disabled={!input.length}
+                  >
+                    {!isDisabled ? "Save" : "Saving"}
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Row>
+          )}
         </>
       </Content>
     </Layout>
